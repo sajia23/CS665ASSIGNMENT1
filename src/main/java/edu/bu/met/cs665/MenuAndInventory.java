@@ -1,6 +1,9 @@
 package edu.bu.met.cs665;
 
+import org.apache.commons.lang3.RandomUtils;
+
 import java.util.HashMap;
+import java.util.Random;
 
 public enum MenuAndInventory {
 
@@ -11,10 +14,10 @@ public enum MenuAndInventory {
     GREEN_TEA("Green Tea", 3, GreenTea.class),
     YELLOW_TEA("Yellow Tea", 3, YellowTea.class),
     MILK("Milk", 0, null),
-    SUGAR("Sugar", 3, null);
+    SUGAR("Sugar", 0, null);
 
     private final String key;
-    private final Integer value;
+    private final Integer price;
     //private final Class bclass;
 
     private final Class beverageClass;
@@ -26,9 +29,17 @@ public enum MenuAndInventory {
         return key;
     }
     public Integer getValue() {
-        return value;
+        return price;
     }
 
+    public static MenuAndInventory randomBeverageItem() {
+        int pick = RandomUtils.nextInt(0, MenuAndInventory.values().length);
+        return MenuAndInventory.values()[pick];
+    }
+    public static MenuAndInventory randomCondimentItem() {
+        int pick = RandomUtils.nextInt(6, MenuAndInventory.values().length);
+        return MenuAndInventory.values()[pick];
+    }
     public Class getBeverageClass() {
         return beverageClass;
     }
@@ -68,9 +79,9 @@ public enum MenuAndInventory {
         }
         return classMapping;
     }
-    MenuAndInventory(String key, Integer value, Class beverageClass) {
+    MenuAndInventory(String key, Integer price, Class beverageClass) {
         this.key = key;
-        this.value = value;
+        this.price = price;
         this.beverageClass = beverageClass;
     }
 }

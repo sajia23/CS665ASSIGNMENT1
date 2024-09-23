@@ -2,8 +2,12 @@ package edu.bu.met.cs665;
 
 import static org.junit.Assert.assertEquals;
 
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
-import edu.bu.met.cs665.example1.Person;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Write some Unit tests for your program like the examples below.
@@ -14,56 +18,57 @@ public class TestAge {
     public TestAge() {
     }
 
+    public List<Item> generateLegalMultiOrderItems(Integer numOfEachBeverage) {
+        List<Item> cartItemList = new ArrayList<>();
+        for(int i = 0; i < numOfEachBeverage; i ++) {
+            MenuAndInventory beverageItem = MenuAndInventory.randomBeverageItem();
+            MenuAndInventory condimentItem = MenuAndInventory.randomCondimentItem();
+            Item item = new Item();
+            item.setBeverageType(beverageItem.getKey());
+            item.setBeverageNum(RandomUtils.nextInt(1, 100));
+            item.setCondimentType(condimentItem.getKey());
+            item.setCondimentNum(RandomUtils.nextInt(0,4));
+            cartItemList.add(item);
+        }
+        return cartItemList;
+    }
+
     @Test
-    public void testGetFirstName() {
+    public void BuyADrink() throws InstantiationException, IllegalAccessException {
+        HashMap<String, Integer> beverageNameToNum = new HashMap<String, Integer>();
 
-        Person student = new Person("John", "Doe");
-        assertEquals("John", student.getFirstName());
+        Customer customer = new Customer();
+        List<Item> order = generateLegalMultiOrderItems(1);
+        customer.addToShoppingCart(order);
+        Machine machine = new Machine();
+        machine.placeTheOrder(customer);
 
+        List<Beverage> receivedBeverages = customer.getReceivedBeverageList();
+        List<Receipt> receiptList = customer.getReceipts();
+        for(int i = 0; i < receivedBeverages.size(); i ++) {
+            beverageNameToNum.put(receivedBeverages.get(i).getName(), beverageNameToNum.getOrDefault(receivedBeverages.get(i).getName(), 0) + 1);
+        }
+
+        assertEquals(receiptList.size(), 1);
+
+        //check if the beverage num of each type matches order
+        for(int i = 0; i < order.size(); i ++) {
+            assertEquals(beverageNameToNum.containsKey(order.get(i).getBeverageType()), true);
+            assertEquals(beverageNameToNum.get(order.get(i).getBeverageType()), order.get(i).getBeverageNum());
+        }
     }
 
 
-    @Test
-    public void testSetFirstName() {
-        // Given: a student object with the following first name and last name
-        Person student = new Person("John", "Doe");
-
-        // When: the student's first name is changed via the following setter method
-        student.setFirstName("Bob");
-
-        // Then: we confirm the expected result is the same as the value obtained from
-        // the getter method
-        assertEquals("Bob", student.getFirstName());
-    }
 
 
-    @Test
-    public void testGetLastName() {
-
-        Person student = new Person("John", "Doe");
-        assertEquals("Doe", student.getLastName());
-
-    }
 
 
-    @Test
-    public void testSetLastName() {
-
-        Person student = new Person("John", "Doe");
-        student.setLastName("Henrink");
-
-        assertEquals("Henrink", student.getLastName());
-
-    }
 
 
-    @Test
-    public void testPerson() {
 
-        Person student = new Person("John", "Doe");
-        assertEquals("John", student.getFirstName());
-        assertEquals("Doe", student.getLastName());
-    }
+
+
+
 
 
 }

@@ -19,7 +19,7 @@ public class Machine implements PublisherBase{
         //inventories = new HashMap<String, Integer>();
         //condiments = new
     }
-    public void PlaceTheOrder(Customer customer) throws InstantiationException, IllegalAccessException {
+    public void placeTheOrder(Customer customer) throws InstantiationException, IllegalAccessException {
         this.subscribe(customer);
         if(customer == null) return;
         int amount = 0;
@@ -38,11 +38,14 @@ public class Machine implements PublisherBase{
     private void implementTheOrder(Order order, Receipt receipt) throws InstantiationException, IllegalAccessException {
         List<Beverage> beverageList = new ArrayList<>();
         for(Item item : order.getItemList()) {
-            Class clz = MenuAndInventory.getClassMapping().get(item.getBeverageType());
-            beverageList.add((Beverage) clz.newInstance());
+            for(int i = 0; i < item.getBeverageNum(); i ++) {
+                Class clz = MenuAndInventory.getClassMapping().get(item.getBeverageType());
+                beverageList.add((Beverage) clz.newInstance());
+            }
         }
         cookedBeverageList.put(order.getName(), beverageList);
         notifySubscribers(order.getName());
+        this.unsubscribe(order.getName());
     }
     public HashMap<String, Integer> getMenu() {
         return MenuAndInventory.getMenuMapping();
@@ -56,13 +59,12 @@ public class Machine implements PublisherBase{
     @Override
     public void subscribe(SubscriberBase o) {
         Customer c = (Customer) o;
-        //customerList.put
         customerList.put(c.getName(), c);
     }
 
     @Override
-    public void unsubscribe(SubscriberBase o) {
-
+    public void unsubscribe(String name) {
+        customerList.remove(name);
     }
 
     @Override
