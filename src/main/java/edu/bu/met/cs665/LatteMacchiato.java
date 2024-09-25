@@ -2,12 +2,14 @@ package edu.bu.met.cs665;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This is the LatteMacchiato class one of beverage type.
+ */
 public class LatteMacchiato implements Beverage{
     private List<String> cookingLog;
     public LatteMacchiato() {
         this.cookingLog = new ArrayList<String>();
-        this.cookBeverage();
+        this.cookBeverageInstructions();
     }
     @Override
     public String getName() {
@@ -15,7 +17,7 @@ public class LatteMacchiato implements Beverage{
     }
 
     @Override
-    public void cookBeverage() {
+    public void cookBeverageInstructions() {
         cookingLog.add("Heat the water ...");
         cookingLog.add("Put in the Latte Macchiato capsule ...");
         cookingLog.add("Heat the water for 1 minute ...");

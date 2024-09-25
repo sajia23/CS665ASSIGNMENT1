@@ -22,7 +22,7 @@ public class TestAge {
     public List<Item> generateLegalMultiOrderItems(Integer num) {
         HashMap<String, Item> cartItemList = new HashMap<>();
         //List<Item> cartItemList = new ArrayList<>();
-        for(int i = 0; i < num; i ++) {
+        while(cartItemList.size() < num) {
             MenuAndInventory beverageItem = MenuAndInventory.randomBeverageItem();
             MenuAndInventory condimentItem = MenuAndInventory.randomCondimentItem();
             Item item = new Item();
@@ -114,6 +114,7 @@ public class TestAge {
 
     }
 
+    //Could not add item to shopping cart with wrong type of beverage.
     @Test
     public void BuyOneDrinkWithWrongBeverageType() {
         Customer customer = new Customer();
@@ -123,6 +124,7 @@ public class TestAge {
         assertEquals(customer.getShoppingCart().size(), 0);
     }
 
+    //Could not add item to shopping cart which is wrong type of beverage.
     @Test
     public void BuyMultiDrinkWithOneWrongBeverageType() {
         Customer customer = new Customer();
@@ -132,6 +134,7 @@ public class TestAge {
         assertEquals(customer.getShoppingCart().size(), 1);
     }
 
+    //Could not add item to shopping cart with wrong type of condiments.
     @Test
     public void BuyOneDrinkWithWrongCondimentType() {
         Customer customer = new Customer();

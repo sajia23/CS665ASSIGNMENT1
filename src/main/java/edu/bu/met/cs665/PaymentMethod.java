@@ -1,7 +1,10 @@
 package edu.bu.met.cs665;
 
 import java.util.Random;
-
+/**
+ * This is the PaymentMethod enum class.
+ * It provides method to show different payment method.
+ */
 public enum PaymentMethod {
     VISA,
     MASTERCARD,

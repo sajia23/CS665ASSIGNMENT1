@@ -3,7 +3,11 @@ package edu.bu.met.cs665;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * This is the Machine class implementing Publisher interface.
+ * It will receive order from customers and make beverages to customers.
+ * Also, it can notify customers to receive beverages.
+ */
 public class Machine implements PublisherBase{
 
     private HashMap<String, SubscriberBase> customerList;
@@ -14,26 +18,26 @@ public class Machine implements PublisherBase{
         receiptList = new HashMap<>();
         cookedBeverageList = new HashMap<>();
     }
+
     public void placeTheOrder(Customer customer) throws InstantiationException, IllegalAccessException {
         this.subscribe(customer);
-        if(customer == null) return;
+        if(customer == null) {return;}
         int amount = 0;
-        //List<Beverage> beverages = new ArrayList<>();
+
         for(Item item : customer.getShoppingCart()) {
             amount += MenuAndInventory.getPrice(item.getBeverageType());
         }
         Receipt receipt = new Receipt(customer.getName(), customer.getPaymentMethod(), amount, customer.getShoppingCart());
         receiptList.put(customer.getName(), receipt);
-        //orderList.add(new Order(customer.getName(), customer.getShoppingCart()));
+
         Order order = new Order(customer.getName(), customer.getShoppingCart());
         implementTheOrder(order, receipt);
-        //return receipt;
     }
 
     private void implementTheOrder(Order order, Receipt receipt) throws InstantiationException, IllegalAccessException {
         List<Beverage> beverageList = new ArrayList<>();
         for(Item item : order.getItemList()) {
-            for(int i = 0; i < item.getBeverageNum(); i ++) {
+            for(int i = 0; i < item.getBeverageNum(); i++) {
                 Class clz = MenuAndInventory.getClassMapping().get(item.getBeverageType());
                 beverageList.add((Beverage) clz.newInstance());
             }
@@ -42,14 +46,10 @@ public class Machine implements PublisherBase{
         notifySubscribers(order.getName());
         this.unsubscribe(order.getName());
     }
+
     public HashMap<String, Integer> getMenu() {
         return MenuAndInventory.getMenuMapping();
     }
-
-//    public HashMap<String, Integer> AddInventory(String name, Integer amount) {
-//        inventories.put(name, inventories.getOrDefault(name, 0) + amount);
-//        return inventories;
-//    }
 
     @Override
     public void subscribe(SubscriberBase o) {

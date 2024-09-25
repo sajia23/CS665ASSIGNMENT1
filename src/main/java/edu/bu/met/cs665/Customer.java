@@ -1,10 +1,14 @@
 package edu.bu.met.cs665;
 
-import org.apache.commons.lang3.RandomStringUtils;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.RandomStringUtils;
 
+/**
+ * This is the Customer class implementing Subscriber interface.
+ * Every customer has its own name, payment method and shopping cart.
+ * Also, everyone can receive receipt and beverages.
+ */
 public class Customer implements SubscriberBase {
 
     private String name;
@@ -15,7 +19,7 @@ public class Customer implements SubscriberBase {
 
     private PaymentMethod paymentMethod;
 
-    public Customer(){
+    public Customer() {
         name = RandomStringUtils.random(10, true, true);
         shoppingCart = new ArrayList<>();
         paymentMethod = PaymentMethod.randomPaymentMethod();
@@ -34,14 +38,14 @@ public class Customer implements SubscriberBase {
     public List<Item> getShoppingCart() {
         return shoppingCart;
     }
+
     public void addToShoppingCart(List<Item> items) {
-        for(int i = 0; i < items.size(); i ++) {
-            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getBeverageType())) continue;
-            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getCondimentType())) continue;
-            if (items.get(i).getCondimentNum() > 3) continue;
+        for(int i = 0; i < items.size(); i++) {
+            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getBeverageType())) {continue;}
+            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getCondimentType())) {continue;}
+            if (items.get(i).getCondimentNum() > 3) {continue;}
             shoppingCart.add(items.get(i));
         }
-        //return shoppingCart;
     }
 
     @Override

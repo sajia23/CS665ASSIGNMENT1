@@ -4,20 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * This is the Espresso class one of beverage type.
+ */
 public class Espresso implements Beverage{
 
     private List<String> cookingLog;
     public Espresso() {
         cookingLog = new ArrayList<String>();
-        this.cookBeverage();
+        this.cookBeverageInstructions();
     }
+
     @Override
     public String getName() {
         return "Espresso";
     }
 
     @Override
-    public void cookBeverage() {
+    public void cookBeverageInstructions() {
         cookingLog.add("Heat the water ...");
         cookingLog.add("Put in the Espresso capsule ...");
         cookingLog.add("Heat the water for 1 minute ...");

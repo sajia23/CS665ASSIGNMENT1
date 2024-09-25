@@ -2,12 +2,14 @@ package edu.bu.met.cs665;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class GreenTea implements Beverage{
+/**
+ * This is the GreenTea class one of beverage type.
+ */
+public class GreenTea implements Beverage {
     private List<String> cookingLog;
     public GreenTea() {
         this.cookingLog = new ArrayList<String>();
-        this.cookBeverage();
+        this.cookBeverageInstructions();
     }
     @Override
     public String getName() {
@@ -15,7 +17,7 @@ public class GreenTea implements Beverage{
     }
 
     @Override
-    public void cookBeverage() {
+    public void cookBeverageInstructions() {
         cookingLog.add("Heat the water ...");
         cookingLog.add("Put in the Green Tea capsule ...");
         cookingLog.add("Heat the water for 1 minute ...");

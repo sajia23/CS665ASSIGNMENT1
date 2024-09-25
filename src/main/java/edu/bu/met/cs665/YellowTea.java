@@ -2,12 +2,14 @@ package edu.bu.met.cs665;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * This is the YellowTea class.
+ */
 public class YellowTea implements Beverage{
     private List<String> cookingLog;
     public YellowTea() {
         this.cookingLog = new ArrayList<String>();
-        this.cookBeverage();
+        this.cookBeverageInstructions();
     }
     @Override
     public String getName() {
@@ -15,7 +17,7 @@ public class YellowTea implements Beverage{
     }
 
     @Override
-    public void cookBeverage() {
+    public void cookBeverageInstructions() {
         cookingLog.add("Heat the water ...");
         cookingLog.add("Put in the Yellow Tea capsule ...");
         cookingLog.add("Heat the water for 1 minute ...");

@@ -1,5 +1,8 @@
 package edu.bu.met.cs665;
 
+/**
+ * This is the Item class which is collected in Order class.
+ */
 public class Item {
 
     String beverageType;

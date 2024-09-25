@@ -1,10 +1,12 @@
 package edu.bu.met.cs665;
 
-import org.apache.commons.lang3.RandomUtils;
-
 import java.util.HashMap;
-import java.util.Random;
-
+import org.apache.commons.lang3.RandomUtils;
+/**
+ * This is the MenuAndInventory enum class.
+ * It provides method to show item name, price and class for java reflection.
+ * Also, it will be used by whole project.
+ */
 public enum MenuAndInventory {
 
     ESPRESSO("Espresso", 3, Espresso.class),
@@ -20,7 +22,6 @@ public enum MenuAndInventory {
     private final Integer price;
     //private final Class bclass;
     private final Class beverageClass;
-
     private static HashMap<String, Integer> menuMapping;
     private static HashMap<String, Class> classMapping;
 
@@ -33,7 +34,12 @@ public enum MenuAndInventory {
     public Class getBeverageClass() {
         return beverageClass;
     }
-
+    public static Integer getPrice(String name) {
+        if(menuMapping == null){
+            initMenuMapping();
+        }
+        return menuMapping.get(name);
+    }
     public static MenuAndInventory randomBeverageItem() {
         int pick = RandomUtils.nextInt(0, 6);
         return MenuAndInventory.values()[pick];
@@ -42,19 +48,6 @@ public enum MenuAndInventory {
         int pick = RandomUtils.nextInt(6, MenuAndInventory.values().length);
         return MenuAndInventory.values()[pick];
     }
-
-    public static Integer getPrice(String name) {
-        if(menuMapping == null){
-            initMenuMapping();
-        }
-        return menuMapping.get(name);
-    }
-//    public static Class getClass(String name) {
-//        if(classMapping == null){
-//            initClassMapping();
-//        }
-//        return classMapping.get(name);
-//    }
     private static void initMenuMapping() {
         menuMapping = new HashMap<String, Integer>();
         for(MenuAndInventory item : values()){

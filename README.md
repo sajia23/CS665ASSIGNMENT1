@@ -1,16 +1,20 @@
 
 | CS-665       | Software Design & Patterns |
 |--------------|----------------------------|
-| Name         | FIRST_NAME LAST_NAME       |
-| Date         | MM/DD/YYYY                 |
-| Course       | Fall / Spring / Summer     |
-| Assignment # |                            |
+| Name         | Shaohua Yue                |
+| Date         | 09/25/2024                 |
+| Course       | Fall                       |
+| Assignment # | 1                          |
 
 # Assignment Overview
-Please add a paragraph or two overviewing the objectives of the assignment.
+In this assignment, I implemented an automatic vending machine. It has the following functions:
+First, customer gets menu which includes beverage type, condiment type and price. 
+Second, customer add items to the shopping cart and machine will check the type and number.
+Third, customer place the order and get receipt from machine.
+After that, people will get all beverage from the machine.
 
 # GitHub Repository Link:
-https://github.com/{YOUR_USERNAME}/cs-665-assignment-{ASSIGNMENT_NUMBER}
+https://github.com/sajia23/CS665ASSIGNMENT1
 
 # Implementation Description 
 
@@ -18,12 +22,20 @@ https://github.com/{YOUR_USERNAME}/cs-665-assignment-{ASSIGNMENT_NUMBER}
 For each assignment, please answer the following:
 
 - Explain the level of flexibility in your implementation, including how new object types can
-be easily added or removed in the future.
+be easily added or removed in the future. 
+- Answer: If there are new types of beverages in the future, I can create a new class that inherits the beverage interface. Add the name and cooking instructions for that type of drink.
+Also, register it in the MenuAndInventory class so that the system could show it to the customer. It is easy to add a new type by creating a new class and registering it.
 - Discuss the simplicity and understandability of your implementation, ensuring that it is
-easy for others to read and maintain.
-- Describe how you have avoided duplicated code and why it is important.
+easy for others to read and maintain. 
+- Answer: In this part, I developed the project using real life rules. Like people should add items to shopping cart before placing the order.
+And customer will get the products and receipt after placing the order. So people will understand the process when they read the codes. And I use java reflection to simulate the manufacturing process.
+Obviously, it is easier to understand.
+- Describe how you have avoided duplicated code and why it is important. 
+- Answer: I have developed beverage interface, so that it will be convenient when I add new beverage type in the future. 
+Also, I have developed enum class for beverage menu so that I could use it in all project and no need to duplicate it in other class.
 - If applicable, mention any design patterns you have used and explain why they were
-chosen.
+chosen. 
+- Answer: I have used Strategy Pattern for making different type of beverage and Observer Strategy for machine informing customer to fetch beverages.
 
 
 # Maven Commands

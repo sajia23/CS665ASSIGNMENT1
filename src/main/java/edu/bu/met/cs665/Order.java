@@ -1,7 +1,10 @@
 package edu.bu.met.cs665;
 
 import java.util.List;
-
+/**
+ * This is the Order class.
+ * It stores customer's name and items.
+ */
 public class Order {
     private String name;
     private List<Item> itemList;
