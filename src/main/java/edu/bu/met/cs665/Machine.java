@@ -6,18 +6,13 @@ import java.util.List;
 
 public class Machine implements PublisherBase{
 
-    //private List<Order> orderList;
-    //private List<Order> finishedOrderList;
-    //private HashMap<String, Integer> inventories;
-    //private List<MenuIitem> menu;
-    //private Menu
-    private HashMap<String, SubscriberBase> customerList = new HashMap<>();
-    private HashMap<String, Receipt> receiptList = new HashMap<>();
-    private HashMap<String, List<Beverage>> cookedBeverageList = new HashMap<>();
+    private HashMap<String, SubscriberBase> customerList;
+    private HashMap<String, Receipt> receiptList;
+    private HashMap<String, List<Beverage>> cookedBeverageList;
     public Machine() {
-        //orderList = new ArrayList<>();
-        //inventories = new HashMap<String, Integer>();
-        //condiments = new
+        customerList = new HashMap<>();
+        receiptList = new HashMap<>();
+        cookedBeverageList = new HashMap<>();
     }
     public void placeTheOrder(Customer customer) throws InstantiationException, IllegalAccessException {
         this.subscribe(customer);

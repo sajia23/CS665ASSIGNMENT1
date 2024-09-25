@@ -19,7 +19,6 @@ public enum MenuAndInventory {
     private final String key;
     private final Integer price;
     //private final Class bclass;
-
     private final Class beverageClass;
 
     private static HashMap<String, Integer> menuMapping;
@@ -31,30 +30,31 @@ public enum MenuAndInventory {
     public Integer getValue() {
         return price;
     }
+    public Class getBeverageClass() {
+        return beverageClass;
+    }
 
     public static MenuAndInventory randomBeverageItem() {
-        int pick = RandomUtils.nextInt(0, MenuAndInventory.values().length);
+        int pick = RandomUtils.nextInt(0, 6);
         return MenuAndInventory.values()[pick];
     }
     public static MenuAndInventory randomCondimentItem() {
         int pick = RandomUtils.nextInt(6, MenuAndInventory.values().length);
         return MenuAndInventory.values()[pick];
     }
-    public Class getBeverageClass() {
-        return beverageClass;
-    }
+
     public static Integer getPrice(String name) {
         if(menuMapping == null){
             initMenuMapping();
         }
         return menuMapping.get(name);
     }
-    public static Class getClass(String name) {
-        if(classMapping == null){
-            initClassMapping();
-        }
-        return classMapping.get(name);
-    }
+//    public static Class getClass(String name) {
+//        if(classMapping == null){
+//            initClassMapping();
+//        }
+//        return classMapping.get(name);
+//    }
     private static void initMenuMapping() {
         menuMapping = new HashMap<String, Integer>();
         for(MenuAndInventory item : values()){

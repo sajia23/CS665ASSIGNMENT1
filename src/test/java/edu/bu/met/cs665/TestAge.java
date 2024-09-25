@@ -1,6 +1,7 @@
 package edu.bu.met.cs665;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.Test;
@@ -18,9 +19,10 @@ public class TestAge {
     public TestAge() {
     }
 
-    public List<Item> generateLegalMultiOrderItems(Integer numOfEachBeverage) {
-        List<Item> cartItemList = new ArrayList<>();
-        for(int i = 0; i < numOfEachBeverage; i ++) {
+    public List<Item> generateLegalMultiOrderItems(Integer num) {
+        HashMap<String, Item> cartItemList = new HashMap<>();
+        //List<Item> cartItemList = new ArrayList<>();
+        for(int i = 0; i < num; i ++) {
             MenuAndInventory beverageItem = MenuAndInventory.randomBeverageItem();
             MenuAndInventory condimentItem = MenuAndInventory.randomCondimentItem();
             Item item = new Item();
@@ -28,18 +30,21 @@ public class TestAge {
             item.setBeverageNum(RandomUtils.nextInt(1, 100));
             item.setCondimentType(condimentItem.getKey());
             item.setCondimentNum(RandomUtils.nextInt(0,4));
-            cartItemList.add(item);
+            if(cartItemList.containsKey(beverageItem.getKey())) {
+                cartItemList.get(beverageItem.getKey()).setBeverageNum(cartItemList.get(beverageItem.getKey()).getBeverageNum() + item.getBeverageNum());
+            }
+            cartItemList.put(item.getBeverageType(), item);
         }
-        return cartItemList;
+        return new ArrayList<>(cartItemList.values());
     }
 
     @Test
-    public void BuyADrink() throws InstantiationException, IllegalAccessException {
+    public void BuyOneDrink() throws InstantiationException, IllegalAccessException {
         HashMap<String, Integer> beverageNameToNum = new HashMap<String, Integer>();
 
         Customer customer = new Customer();
-        List<Item> order = generateLegalMultiOrderItems(1);
-        customer.addToShoppingCart(order);
+        List<Item> items = generateLegalMultiOrderItems(1);
+        customer.addToShoppingCart(items);
         Machine machine = new Machine();
         machine.placeTheOrder(customer);
 
@@ -50,12 +55,90 @@ public class TestAge {
         }
 
         assertEquals(receiptList.size(), 1);
+        assertEquals(receiptList.get(0).getCustomerName(), customer.getName());
+        int amount = 0;
+        for(int i = 0; i < items.size(); i ++) {
+            amount += MenuAndInventory.getPrice(items.get(i).getBeverageType());
+        }
+        assertEquals(receiptList.get(0).getAmount(), amount);
+        assertEquals(receiptList.get(0).getPaymentMethod(), customer.getPaymentMethod());
 
         //check if the beverage num of each type matches order
-        for(int i = 0; i < order.size(); i ++) {
-            assertEquals(beverageNameToNum.containsKey(order.get(i).getBeverageType()), true);
-            assertEquals(beverageNameToNum.get(order.get(i).getBeverageType()), order.get(i).getBeverageNum());
+        for(int i = 0; i < items.size(); i ++) {
+            assertEquals(beverageNameToNum.containsKey(items.get(i).getBeverageType()), true);
+            assertEquals(beverageNameToNum.get(items.get(i).getBeverageType()), items.get(i).getBeverageNum());
         }
+    }
+
+    @Test
+    public void BuyMultiDrink() throws InstantiationException, IllegalAccessException {
+        HashMap<String, Integer> beverageNameToNum = new HashMap<String, Integer>();
+
+        Customer customer = new Customer();
+        List<Item> items = generateLegalMultiOrderItems(3);
+        customer.addToShoppingCart(items);
+        Machine machine = new Machine();
+        machine.placeTheOrder(customer);
+
+        List<Beverage> receivedBeverages = customer.getReceivedBeverageList();
+        List<Receipt> receiptList = customer.getReceipts();
+        for(int i = 0; i < receivedBeverages.size(); i ++) {
+            beverageNameToNum.put(receivedBeverages.get(i).getName(), beverageNameToNum.getOrDefault(receivedBeverages.get(i).getName(), 0) + 1);
+        }
+
+        assertEquals(receiptList.size(), 1);
+        assertEquals(receiptList.get(0).getCustomerName(), customer.getName());
+        int amount = 0;
+        for(int i = 0; i < items.size(); i ++) {
+            amount += MenuAndInventory.getPrice(items.get(i).getBeverageType());
+        }
+        assertEquals(receiptList.get(0).getAmount(), amount);
+        assertEquals(receiptList.get(0).getPaymentMethod(), customer.getPaymentMethod());
+
+
+        //check if the beverage num of each type matches order
+        for(int i = 0; i < items.size(); i ++) {
+            assertEquals(beverageNameToNum.containsKey(items.get(i).getBeverageType()), true);
+            assertEquals(beverageNameToNum.get(items.get(i).getBeverageType()), items.get(i).getBeverageNum());
+        }
+    }
+
+    //Could not add item to shopping cart with wrong num of condiments.
+    @Test
+    public void BuyOneDrinkWithWrongNumOfCondiments() {
+        Customer customer = new Customer();
+        List<Item> items = generateLegalMultiOrderItems(1);
+        items.get(0).setCondimentNum(4);
+        customer.addToShoppingCart(items);
+        assertEquals(customer.getShoppingCart().size(), 0);
+
+    }
+
+    @Test
+    public void BuyOneDrinkWithWrongBeverageType() {
+        Customer customer = new Customer();
+        List<Item> items = generateLegalMultiOrderItems(1);
+        items.get(0).setBeverageType("CocaCola");
+        customer.addToShoppingCart(items);
+        assertEquals(customer.getShoppingCart().size(), 0);
+    }
+
+    @Test
+    public void BuyMultiDrinkWithOneWrongBeverageType() {
+        Customer customer = new Customer();
+        List<Item> items = generateLegalMultiOrderItems(2);
+        items.get(0).setBeverageType("CocaCola");
+        customer.addToShoppingCart(items);
+        assertEquals(customer.getShoppingCart().size(), 1);
+    }
+
+    @Test
+    public void BuyOneDrinkWithWrongCondimentType() {
+        Customer customer = new Customer();
+        List<Item> items = generateLegalMultiOrderItems(1);
+        items.get(0).setCondimentType("CocaCola");
+        customer.addToShoppingCart(items);
+        assertEquals(customer.getShoppingCart().size(), 0);
     }
 
 

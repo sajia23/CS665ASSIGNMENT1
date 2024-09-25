@@ -34,14 +34,14 @@ public class Customer implements SubscriberBase {
     public List<Item> getShoppingCart() {
         return shoppingCart;
     }
-    public List<Item> addToShoppingCart(List<Item> items) {
+    public void addToShoppingCart(List<Item> items) {
         for(int i = 0; i < items.size(); i ++) {
-            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getBeverageType())) return null;
-            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getCondimentType())) return null;
-            if (items.get(i).getCondimentNum() > 3) return null;
+            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getBeverageType())) continue;
+            if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getCondimentType())) continue;
+            if (items.get(i).getCondimentNum() > 3) continue;
             shoppingCart.add(items.get(i));
         }
-        return shoppingCart;
+        //return shoppingCart;
     }
 
     @Override
