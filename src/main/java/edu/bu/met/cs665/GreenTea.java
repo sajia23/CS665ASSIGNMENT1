@@ -38,4 +38,9 @@ public class GreenTea implements Beverage {
         cookingLog.add("Add condiment to the beverage ...");
         cookingLog.add("Finished!");
     }
+
+    @Override
+    public double cost() {
+        return 3.0;
+    }
 }

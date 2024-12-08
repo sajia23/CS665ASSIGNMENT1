@@ -10,7 +10,7 @@ package edu.bu.met.cs665;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YellowTea implements Beverage{
+public class YellowTea implements Beverage {
     private List<String> cookingLog;
     /**
      * Constructs a new Yellow Tea and initializes its cooking instructions
@@ -39,5 +39,10 @@ public class YellowTea implements Beverage{
         cookingLog.add("Heat the water for 1 minute ...");
         cookingLog.add("Add condiment to the beverage ...");
         cookingLog.add("Finished!");
+    }
+
+    @Override
+    public double cost() {
+        return 3.0;
     }
 }
