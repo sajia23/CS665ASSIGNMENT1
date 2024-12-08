@@ -1,14 +1,18 @@
+/**
+ * Name: Shaohua Yue
+ * Course: CS-665 Software Designs & Patterns
+ * Date: 03/19/2024
+ * File Name: Customer.java
+ * Description: This class represents a customer who can place orders and receive beverages.
+ * It implements the Observer pattern through the SubscriberBase interface.
+ */
 package edu.bu.met.cs665;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 
-/**
- * This is the Customer class implementing Subscriber interface.
- * Every customer has its own name, payment method and shopping cart.
- * Also, everyone can receive receipt and beverages.
- */
+
 public class Customer implements SubscriberBase {
 
     private String name;
@@ -39,6 +43,10 @@ public class Customer implements SubscriberBase {
         return shoppingCart;
     }
 
+    /**
+     * Adds items to the customer's shopping cart if they meet the menu and condiment restrictions
+     * @param items List of items to be added to the shopping cart
+     */
     public void addToShoppingCart(List<Item> items) {
         for(int i = 0; i < items.size(); i++) {
             if (!MenuAndInventory.getMenuMapping().containsKey(items.get(i).getBeverageType())) {continue;}
@@ -48,6 +56,11 @@ public class Customer implements SubscriberBase {
         }
     }
 
+    /**
+     * Updates the customer's received beverages and receipts when notified by the publisher
+     * @param receipt the receipt for the completed order
+     * @param beverageList list of prepared beverages
+     */
     @Override
     public void updateSelf(Receipt receipt, List<Beverage> beverageList) {
         this.receivedBeverageList.addAll(beverageList);

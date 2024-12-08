@@ -1,12 +1,16 @@
+/**
+ * Name: Shaohua Yue
+ * Course: CS-665 Software Designs & Patterns
+ * Date: 03/19/2024
+ * File Name: MenuAndInventory.java
+ * Description: This enum manages the menu items, prices, and beverage classes for the vending machine system.
+ * It provides utility methods for accessing menu information and generating random selections.
+ */
 package edu.bu.met.cs665;
 
 import java.util.HashMap;
 import org.apache.commons.lang3.RandomUtils;
-/**
- * This is the MenuAndInventory enum class.
- * It provides method to show item name, price and class for java reflection.
- * Also, it will be used by whole project.
- */
+
 public enum MenuAndInventory {
 
     ESPRESSO("Espresso", 3, Espresso.class),
@@ -34,12 +38,21 @@ public enum MenuAndInventory {
     public Class getBeverageClass() {
         return beverageClass;
     }
+    /**
+     * Gets the price for a specific menu item
+     * @param name the name of the menu item
+     * @return the price of the item
+     */
     public static Integer getPrice(String name) {
         if(menuMapping == null){
             initMenuMapping();
         }
         return menuMapping.get(name);
     }
+    /**
+     * Randomly selects a beverage item from the menu
+     * @return a random beverage MenuAndInventory item
+     */
     public static MenuAndInventory randomBeverageItem() {
         int pick = RandomUtils.nextInt(0, 6);
         return MenuAndInventory.values()[pick];

@@ -11,7 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Write some Unit tests for your program like the examples below.
+ * Name: Shaohua Yue
+ * Course: CS-665 Software Designs & Patterns
+ * Date: 03/19/2024
+ * File Name: TestAge.java
+ * Description: This class contains unit tests for the beverage vending machine system.
  */
 
 public class TestAge {
@@ -19,6 +23,11 @@ public class TestAge {
     public TestAge() {
     }
 
+    /**
+     * Generates a list of legal order items for testing
+     * @param num the number of different items to generate
+     * @return List of randomly generated legal order items
+     */
     public List<Item> generateLegalMultiOrderItems(Integer num) {
         HashMap<String, Item> cartItemList = new HashMap<>();
         //List<Item> cartItemList = new ArrayList<>();
@@ -38,6 +47,9 @@ public class TestAge {
         return new ArrayList<>(cartItemList.values());
     }
 
+    /**
+     * Tests ordering a single drink
+     */
     @Test
     public void BuyOneDrink() throws InstantiationException, IllegalAccessException {
         HashMap<String, Integer> beverageNameToNum = new HashMap<String, Integer>();
@@ -70,6 +82,9 @@ public class TestAge {
         }
     }
 
+    /**
+     * Tests ordering multiple drinks
+     */
     @Test
     public void BuyMultiDrink() throws InstantiationException, IllegalAccessException {
         HashMap<String, Integer> beverageNameToNum = new HashMap<String, Integer>();
@@ -103,7 +118,9 @@ public class TestAge {
         }
     }
 
-    //Could not add item to shopping cart with wrong num of condiments.
+    /**
+     * Tests validation of condiment quantity restrictions
+     */
     @Test
     public void BuyOneDrinkWithWrongNumOfCondiments() {
         Customer customer = new Customer();
@@ -114,7 +131,9 @@ public class TestAge {
 
     }
 
-    //Could not add item to shopping cart with wrong type of beverage.
+    /**
+     * Tests validation of beverage type restrictions
+     */
     @Test
     public void BuyOneDrinkWithWrongBeverageType() {
         Customer customer = new Customer();

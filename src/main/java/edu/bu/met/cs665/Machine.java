@@ -1,13 +1,17 @@
+/**
+ * Name: Shaohua Yue
+ * Course: CS-665 Software Designs & Patterns
+ * Date: 03/19/2024
+ * File Name: Machine.java
+ * Description: This class represents a beverage vending machine that implements the Publisher interface
+ * for the Observer pattern. It handles order processing and beverage preparation.
+ */
 package edu.bu.met.cs665;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-/**
- * This is the Machine class implementing Publisher interface.
- * It will receive order from customers and make beverages to customers.
- * Also, it can notify customers to receive beverages.
- */
+
 public class Machine implements PublisherBase{
 
     private HashMap<String, SubscriberBase> customerList;
@@ -19,6 +23,12 @@ public class Machine implements PublisherBase{
         cookedBeverageList = new HashMap<>();
     }
 
+    /**
+     * Processes a customer's order and creates the corresponding receipt and beverages
+     * @param customer the customer placing the order
+     * @throws InstantiationException if there's an error creating beverage instances
+     * @throws IllegalAccessException if there's an error accessing beverage classes
+     */
     public void placeTheOrder(Customer customer) throws InstantiationException, IllegalAccessException {
         this.subscribe(customer);
         if(customer == null) {return;}
@@ -34,6 +44,13 @@ public class Machine implements PublisherBase{
         implementTheOrder(order, receipt);
     }
 
+    /**
+     * Implements the order by creating the requested beverages
+     * @param order the order to be implemented
+     * @param receipt the receipt for the order
+     * @throws InstantiationException if there's an error creating beverage instances
+     * @throws IllegalAccessException if there's an error accessing beverage classes
+     */
     private void implementTheOrder(Order order, Receipt receipt) throws InstantiationException, IllegalAccessException {
         List<Beverage> beverageList = new ArrayList<>();
         for(Item item : order.getItemList()) {
