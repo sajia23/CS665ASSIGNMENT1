@@ -50,7 +50,7 @@ public class Machine implements PublisherBase{
      * @throws InstantiationException if there's an error creating beverage instances
      * @throws IllegalAccessException if there's an error accessing beverage classes
      */
-    private void implementTheOrder(Order order) throws InstantiationException, IllegalAccessException {
+    private void implementTheOrder(Order order, Receipt receipt) throws InstantiationException, IllegalAccessException {
         List<Beverage> beverageList = new ArrayList<>();
         for(Item item : order.getItemList()) {
             for(int i = 0; i < item.getBeverageNum(); i++) {
