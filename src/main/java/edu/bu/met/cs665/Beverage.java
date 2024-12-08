@@ -20,4 +20,10 @@ public interface Beverage {
      * Defines the cooking instructions for the beverage
      */
     public void cookBeverageInstructions();
+
+    /**
+     * Calculates the cost of the beverage
+     * @return the cost of the beverage as a double
+     */
+    public double cost();
 }

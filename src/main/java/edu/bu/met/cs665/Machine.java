@@ -51,12 +51,34 @@ public class Machine implements PublisherBase{
      * @throws InstantiationException if there's an error creating beverage instances
      * @throws IllegalAccessException if there's an error accessing beverage classes
      */
+    // private void implementTheOrder(Order order, Receipt receipt) throws InstantiationException, IllegalAccessException {
+    //     List<Beverage> beverageList = new ArrayList<>();
+    //     for(Item item : order.getItemList()) {
+    //         for(int i = 0; i < item.getBeverageNum(); i++) {
+    //             Class clz = MenuAndInventory.getClassMapping().get(item.getBeverageType());
+    //             beverageList.add((Beverage) clz.newInstance());
+    //         }
+    //     }
+    //     cookedBeverageList.put(order.getName(), beverageList);
+    //     notifySubscribers(order.getName());
+    //     this.unsubscribe(order.getName());
+    // }
     private void implementTheOrder(Order order, Receipt receipt) throws InstantiationException, IllegalAccessException {
         List<Beverage> beverageList = new ArrayList<>();
         for(Item item : order.getItemList()) {
             for(int i = 0; i < item.getBeverageNum(); i++) {
+                // 创建基础饮料
                 Class clz = MenuAndInventory.getClassMapping().get(item.getBeverageType());
-                beverageList.add((Beverage) clz.newInstance());
+                Beverage beverage = (Beverage) clz.newInstance();
+                
+                // 添加调味品
+                if (item.getCondimentType().equals("Milk")) {
+                    beverage = new MilkDecorator(beverage, item.getCondimentNum());
+                } else if (item.getCondimentType().equals("Sugar")) {
+                    beverage = new SugarDecorator(beverage, item.getCondimentNum());
+                }
+                
+                beverageList.add(beverage);
             }
         }
         cookedBeverageList.put(order.getName(), beverageList);
