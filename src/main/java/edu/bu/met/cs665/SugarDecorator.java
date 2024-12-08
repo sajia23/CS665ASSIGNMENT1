@@ -10,7 +10,7 @@ public class SugarDecorator extends CondimentDecorator {
     
     @Override
     public String getName() {
-        return beverage.getName() + " + " + units + " Sugar";
+        return beverage.getName();
     }
     
     @Override

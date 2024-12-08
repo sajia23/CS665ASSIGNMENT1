@@ -10,7 +10,7 @@ public class MilkDecorator extends CondimentDecorator {
     
     @Override
     public String getName() {
-        return beverage.getName() + " + " + units + " Milk";
+        return beverage.getName();
     }
     
     @Override
